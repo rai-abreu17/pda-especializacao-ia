@@ -1,4 +1,6 @@
-# aula1-fundamentos
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 <!--
   Este arquivo entra na janela de contexto do Claude Code em TODA sessão neste projeto.
@@ -14,19 +16,28 @@ Projeto Node pequeno com funções utilitárias em `src/` e testes em `tests/`.
 
 ## Stack
 
-- TODO: linguagem e versão (dica: `node -v`)
-- TODO: como os módulos são importados (ESM ou CommonJS? olhe o `package.json`)
-- TODO: qual runner de testes (dica: olhe o script `test` do `package.json`)
+- Node >= 18 (`engines` no `package.json`; testado com v22). Sem dependências.
+- ESM (`"type": "module"`): `import`/`export`, e o caminho relativo leva a extensão (`../src/validaCpf.js`).
+- Testes com o runner nativo `node:test` + `node:assert/strict`. Sem Jest/Vitest.
 
 ## Comandos
 
-- TODO: comando pra rodar os testes
-- TODO: comando pra rodar os testes em watch
+- Rodar os testes: `npm test` (= `node --test`)
+- Watch: `npm run test:watch`
+- Um arquivo só: `node --test tests/validaCpf.test.js`
+- Um teste por nome: `node --test --test-name-pattern="CPF válido" tests/validaCpf.test.js`
+
+## Estrutura
+
+- Cada `src/<nome>.js` tem o seu `tests/<nome>.test.js`. Os testes são a especificação.
+- `src/validaCpf.js` e `src/fetchUsuario.js` têm bugs de propósito (código "gerado por IA, colado sem ler"): teste falhando ali é a tarefa, não regressão. `src/formataPreco.js` é o que está verde.
+- `fetchUsuario(id, fetchFn = fetch)` recebe o `fetch` por parâmetro; os testes injetam um fake e nunca chamam a rede.
+- `exemplos/` é material de aula, com bugs intencionais, e não roda no `npm test`. Não "conserte".
 
 ## Regras
 
 - Os arquivos em `tests/` são a especificação. **Nunca edite testes** pra fazê-los passar.
-- TODO: escreva a regra "sempre rode os testes antes de dizer que terminou" com as suas palavras
+- Antes de dizer que terminou, rode `npm test` e mostre o resultado. Se algum teste falhar, diga qual e por quê; não declare pronto.
 - TODO: uma regra sua sobre estilo (ex.: `const` em vez de `let`, sem `==`, mensagens de erro em português…)
 
 ## Como eu quero trabalhar com você
