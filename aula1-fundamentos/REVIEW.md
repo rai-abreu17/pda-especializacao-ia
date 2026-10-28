@@ -243,3 +243,15 @@ Cada regra responde a um erro da seção anterior. As regras propostas nesta se�
    o agente fez, e não invente opiniões ou decisões dele; se faltar informação, pergunte.
 5. **(item 5)** Antes de afirmar que uma verificação prova algo, rode-a contra a versão original e confira se
    ela falha pelo motivo esperado.
+
+## Contexto, não-determinismo e alucinação
+
+Durante a sessão, percebi a importância do contexto ao usar o CLAUDE.md para definir regras que o agente
+deveria seguir, como explicar as alterações antes de editar arquivos e executar o `npm test` antes de concluir
+uma tarefa. Com essas instruções, ele passou a seguir esse comportamento. Outro exemplo foi quando o agente
+corrigiu uma skill e, ao executá-la de novo, o texto que voltou ainda era o antigo, porque a versão anterior
+já estava carregada no contexto; ele precisou seguir o passo corrigido que estava no arquivo. Houve também
+uma alucinação: o agente afirmou que o `/revisar-codigo` era somente de leitura sem ter verificado, e só
+corrigiu a resposta depois de consultar a documentação oficial. Quanto ao não-determinismo, percebi diferenças
+entre duas execuções da skill, mas como as entradas não eram iguais, não foi possível afirmar que isso
+ocorreu por aleatoriedade.
