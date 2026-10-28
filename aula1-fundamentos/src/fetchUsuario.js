@@ -4,12 +4,19 @@
 // A função recebe um `fetchFn` pra facilitar teste (injeção de dependência).
 
 export async function fetchUsuario(id, fetchFn = fetch) {
+  if (!Number.isSafeInteger(id) || id <= 0) {
+    throw new Error('id inválido');
+  }
+
   const resposta = await fetchFn(`https://api.exemplo.com/usuarios/${id}`);
-  const dados = await resposta.json();
+  if (!resposta.ok) {
+    throw new Error(`Erro HTTP ${resposta.status}`);
+  }
+  const dados = (await resposta.json()) ?? {};
 
   return {
     id: dados.id,
-    nome: dados.nome.trim(),
-    email: dados.email.toLowerCase(),
+    nome: typeof dados.nome === 'string' ? dados.nome.trim() : '',
+    email: typeof dados.email === 'string' ? dados.email.toLowerCase() : '',
   };
 }
